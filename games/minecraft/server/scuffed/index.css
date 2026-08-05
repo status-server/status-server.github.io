@@ -1,0 +1,192 @@
+/* Page Setup */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121214;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Grid Container */
+.server-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Main Panel Card */
+.mc-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background-color: #1e1e24;
+  border: 1px solid #33333d;
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.panel-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Server Icon (Crisp pixelated rendering for Minecraft icons) */
+.server-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background-color: #2a2a34;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+/* Status Indicator Dot */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #777777;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+
+.status-dot.online {
+  background-color: #2ecc71;
+  box-shadow: 0 0 8px #2ecc71;
+}
+
+.status-dot.offline {
+  background-color: #e74c3c;
+  box-shadow: 0 0 8px #e74c3c;
+}
+
+/* Header & Text Details */
+.mc-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.server-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.server-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Version & Software Badge */
+.version-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #3498db;
+  background-color: #2a2a34;
+  border: 1px solid #3a3a48;
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: none; /* Shown dynamically when online */
+}
+
+.player-count {
+  font-size: 15px;
+  font-weight: 700;
+  color: #a0a0b5;
+  margin-top: 2px;
+}
+
+.server-motd {
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 6px;
+  color: #aaaaaa;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Click-to-Copy Button */
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #2a2a34;
+  border: 1px solid #3f3f4e;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background-color: #353545;
+  border-color: #55556a;
+}
+
+.copy-btn:active {
+  transform: scale(0.96);
+}
+
+.ip-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 13px;
+  color: #3498db;
+}
+
+.copy-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: #3f3f4e;
+  color: #dddddd;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.copy-badge.copied {
+  background-color: #2ecc71;
+  color: #121214;
+}
+
+/* Container for Online Player Heads */
+.player-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  max-width: 320px;
+}
+
+/* Individual Player Head Avatar */
+.player-head {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  image-rendering: pixelated; /* Keeps pixel art sharp */
+  border: 1px solid #33333d;
+  background-color: #2a2a34;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+
+.player-head:hover {
+  transform: scale(1.25);
+  border-color: #3498db;
+  z-index: 10;
+}
