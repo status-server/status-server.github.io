@@ -8,8 +8,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 # config
 SERVER_IP = "animextremes.org"
-OUTPUT_PATH = "../games/minecraft/server/saintontas_mc/statuscard/status.png"
-HISTORY_FILE = "../games/minecraft/server/saintontas_mc/statuscard/history.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(BASE_DIR)
+
+OUTPUT_PATH = os.path.join(ROOT_DIR, "games", "minecraft", "server", "saintontas_mc", "statuscard", "status.png")
+HISTORY_FILE = os.path.join(ROOT_DIR, "games", "minecraft", "server", "saintontas_mc", "statuscard", "history.json")
 BG_COLOR = (18, 18, 18)        
 GRAPH_COLOR = (0, 230, 118)    
 
