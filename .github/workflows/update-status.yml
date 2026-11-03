@@ -43,8 +43,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Add files safely
-          git add games/minecraft/server/saintontas_mc/statuscard/status.png games/minecraft/server/saintontas_mc/statuscard/history.json || true
+          # Add the statuscard folder contents safely
+          git add games/minecraft/server/saintontas_mc/statuscard/ || true
           
           git diff --staged --quiet || git commit -m "Auto-update status card and player history [skip ci]"
           git push
