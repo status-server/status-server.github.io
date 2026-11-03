@@ -16,6 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug Workspace Files (Check where we are)
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 3
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -27,12 +33,10 @@ jobs:
           pip install Pillow requests
 
       - name: Run status generator script
-        # Explicitly look inside the nested directory where the repo contents landed
-        run: python status-server.github.io/script/generate_status_card.py
+        run: python script/generate_status_card.py
 
       - name: Commit and push updated status image and history
         run: |
-          cd status-server.github.io
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add games/minecraft/server/saintontas_mc/statuscard/status.png games/minecraft/server/saintontas_mc/statuscard/history.json
