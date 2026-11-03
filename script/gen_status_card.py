@@ -147,7 +147,7 @@ def generate_card():
     else:
         draw.text((64, 80), "", fill=GRAPH_COLOR, font=font_title)
 
-display_title = SERVER_NAME 
+    display_title = SERVER_NAME 
     
     draw.text((200, 40), display_title, fill=(255, 255, 255), font=font_title)
     draw.text((width - 240, 40), data["players"], fill=(200, 200, 200), font=font_title)
