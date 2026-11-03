@@ -138,9 +138,9 @@ def generate_card():
             img.paste(icon_img, (40, 40), icon_img)
         except Exception as e:
             print(f"Failed to load server icon: {e}")
-            draw.text((64, 80), "MC", fill=GRAPH_COLOR, font=font_title)
+            draw.text((64, 80), "", fill=GRAPH_COLOR, font=font_title)
     else:
-        draw.text((64, 80), "MC", fill=GRAPH_COLOR, font=font_title)
+        draw.text((64, 80), "", fill=GRAPH_COLOR, font=font_title)
 
     server_title = data["motd"][0] if len(data["motd"]) > 0 else "Minecraft Server"
     clean_title_text = server_title.replace('§0','').replace('§1','').replace('§2','').replace('§3','').replace('§4','').replace('§5','').replace('§6','').replace('§7','').replace('§8','').replace('§9','').replace('§a','').replace('§b','').replace('§c','').replace('§d','').replace('§e','').replace('§f','').replace('§l','').replace('§r','')
