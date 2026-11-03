@@ -7,7 +7,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 
 # config
-SERVER_IP = "animextremes.org"  
+SERVER_IP = "animextremes.org"
 OUTPUT_PATH = "../games/minecraft/server/saintontas_mc/statuscard/status.png"
 HISTORY_FILE = "../games/minecraft/server/saintontas_mc/statuscard/history.json"
 BG_COLOR = (18, 18, 18)        
@@ -65,7 +65,7 @@ def update_history(current_count):
     now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M")
     history.append({"time": now_str, "players": current_count})
     
-    # Prune data older than 7 days
+
     cutoff = datetime.utcnow() - timedelta(days=7)
     history = [h for h in history if datetime.strptime(h["time"], "%Y-%m-%d %H:%M") > cutoff]
     
@@ -114,6 +114,7 @@ def generate_card():
     except IOError:
         font_title = font_motd = font_small = ImageFont.load_default()
 
+
     draw.rectangle([20, 20, 84, 84], outline=(60, 60, 60), fill=(30, 30, 30))
 
     if data["icon"]:
@@ -149,7 +150,7 @@ def generate_card():
 
     draw.line([(20, 100), (width - 20, 100)], fill=(45, 45, 45), width=1)
 
-  
+
     draw.text((20, 115), f"Player activity — {clean_title_text}", fill=(255, 255, 255), font=font_title)
     draw.text((20, 140), "last 7 days", fill=(120, 120, 120), font=font_small)
 
@@ -179,12 +180,13 @@ def generate_card():
         for i in range(len(points) - 1):
             draw.line([points[i], points[i+1]], fill=GRAPH_COLOR, width=2)
 
-try:
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    img.save(OUTPUT_PATH)
-    print("Status card generated successfully at:", OUTPUT_PATH)
-except Exception as e:
-    print(f"CRITICAL ERROR SAVING IMAGE: {e}")
+
+    try:
+        os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+        img.save(OUTPUT_PATH)
+        print("Status card generated successfully at:", OUTPUT_PATH)
+    except Exception as e:
+        print(f"CRITICAL ERROR SAVING IMAGE: {e}")
 
 if __name__ == "__main__":
     generate_card()
