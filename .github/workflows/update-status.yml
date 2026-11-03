@@ -27,7 +27,7 @@ jobs:
           pip install Pillow requests
 
       - name: Run status generator script
-        run: python ./script/generate_status_card.py
+        run: python script/generate_status_card.py
 
       - name: Commit and push updated status image and history
         run: |
