@@ -163,7 +163,7 @@ def generate_card():
     draw.line([(40, 200), (width - 40, 200)], fill=(45, 45, 45), width=2)
 
 
-    draw.text((40, 240), f"Player activity — {display_title}", fill=(255, 255, 255), font=font_title)
+    draw.text((40, 240), f"Player activity...", fill=(255, 255, 255), font=font_title)
     draw.text((40, 290), "last 24 hours", fill=(120, 120, 120), font=font_small)
 
     graph_x1, graph_y1 = 120, 360
