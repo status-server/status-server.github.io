@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 # config
 SERVER_IP = "animextremes.org"
-
+SERVER_NAME = "EOS Server"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -147,10 +147,9 @@ def generate_card():
     else:
         draw.text((64, 80), "", fill=GRAPH_COLOR, font=font_title)
 
-    server_title = data["motd"][0] if len(data["motd"]) > 0 else "Minecraft Server"
-    clean_title_text = server_title.replace('§0','').replace('§1','').replace('§2','').replace('§3','').replace('§4','').replace('§5','').replace('§6','').replace('§7','').replace('§8','').replace('§9','').replace('§a','').replace('§b','').replace('§c','').replace('§d','').replace('§e','').replace('§f','').replace('§l','').replace('§r','')
+display_title = SERVER_NAME 
     
-    draw.text((200, 40), clean_title_text, fill=(255, 255, 255), font=font_title)
+    draw.text((200, 40), display_title, fill=(255, 255, 255), font=font_title)
     draw.text((width - 240, 40), data["players"], fill=(200, 200, 200), font=font_title)
     
 
@@ -164,7 +163,7 @@ def generate_card():
     draw.line([(40, 200), (width - 40, 200)], fill=(45, 45, 45), width=2)
 
 
-    draw.text((40, 240), f"Player activity — {clean_title_text}", fill=(255, 255, 255), font=font_title)
+    draw.text((40, 240), f"Player activity — {display_title}", fill=(255, 255, 255), font=font_title)
     draw.text((40, 290), "last 24 hours", fill=(120, 120, 120), font=font_small)
 
     graph_x1, graph_y1 = 120, 360
