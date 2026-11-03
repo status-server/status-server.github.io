@@ -115,7 +115,7 @@ def generate_card():
     img = Image.new("RGB", (width, height), color=BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-try:
+    try:
         font_title = ImageFont.truetype("arial.ttf", 52)
         font_motd = ImageFont.truetype("arial.ttf", 38)
         font_small = ImageFont.truetype("arial.ttf", 26)
