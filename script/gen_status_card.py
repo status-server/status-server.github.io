@@ -8,13 +8,17 @@ from PIL import Image, ImageDraw, ImageFont
 
 # config
 SERVER_IP = "animextremes.org"
+
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
 OUTPUT_PATH = os.path.join(ROOT_DIR, "games", "minecraft", "server", "saintontas_mc", "statuscard", "status.png")
 HISTORY_FILE = os.path.join(ROOT_DIR, "games", "minecraft", "server", "saintontas_mc", "statuscard", "history.json")
+
 BG_COLOR = (18, 18, 18)        
 GRAPH_COLOR = (0, 230, 118)    
+
 
 MINECRAFT_COLORS = {
     '0': (0, 0, 0),         '1': (0, 0, 170),
@@ -69,7 +73,7 @@ def update_history(current_count):
     history.append({"time": now_str, "players": current_count})
     
 
-    cutoff = datetime.utcnow() - timedelta(days=7)
+    cutoff = datetime.utcnow() - timedelta(hours=24)
     history = [h for h in history if datetime.strptime(h["time"], "%Y-%m-%d %H:%M") > cutoff]
     
     with open(HISTORY_FILE, "w") as f:
@@ -106,19 +110,20 @@ def generate_card():
     data = fetch_server_data()
     history = update_history(data["online_count"])
     
-    width, height = 940, 360
+
+    width, height = 1920, 1080
     img = Image.new("RGB", (width, height), color=BG_COLOR)
     draw = ImageDraw.Draw(img)
 
     try:
-        font_title = ImageFont.truetype("arial.ttf", 20)
-        font_motd = ImageFont.truetype("arial.ttf", 16)
-        font_small = ImageFont.truetype("arial.ttf", 13)
+        font_title = ImageFont.truetype("arial.ttf", 40)
+        font_motd = ImageFont.truetype("arial.ttf", 32)
+        font_small = ImageFont.truetype("arial.ttf", 24)
     except IOError:
         font_title = font_motd = font_small = ImageFont.load_default()
 
 
-    draw.rectangle([20, 20, 84, 84], outline=(60, 60, 60), fill=(30, 30, 30))
+    draw.rectangle([40, 40, 168, 168], outline=(60, 60, 60), fill=(30, 30, 30))
 
     if data["icon"]:
         try:
@@ -129,36 +134,36 @@ def generate_card():
                 
             icon_bytes = base64.b64decode(icon_base64_str)
             icon_img = Image.open(io.BytesIO(icon_bytes)).convert("RGBA")
-            icon_img = icon_img.resize((64, 64), Image.Resampling.NEAREST)
-            img.paste(icon_img, (20, 20), icon_img)
+            icon_img = icon_img.resize((128, 128), Image.Resampling.NEAREST)
+            img.paste(icon_img, (40, 40), icon_img)
         except Exception as e:
             print(f"Failed to load server icon: {e}")
-            draw.text((32, 42), "", fill=GRAPH_COLOR, font=font_title)
+            draw.text((64, 80), "MC", fill=GRAPH_COLOR, font=font_title)
     else:
-        draw.text((32, 42), "", fill=GRAPH_COLOR, font=font_title)
+        draw.text((64, 80), "MC", fill=GRAPH_COLOR, font=font_title)
 
     server_title = data["motd"][0] if len(data["motd"]) > 0 else "Minecraft Server"
     clean_title_text = server_title.replace('§0','').replace('§1','').replace('§2','').replace('§3','').replace('§4','').replace('§5','').replace('§6','').replace('§7','').replace('§8','').replace('§9','').replace('§a','').replace('§b','').replace('§c','').replace('§d','').replace('§e','').replace('§f','').replace('§l','').replace('§r','')
     
-    draw.text((100, 20), clean_title_text, fill=(255, 255, 255), font=font_title)
-    draw.text((width - 120, 20), data["players"], fill=(200, 200, 200), font=font_title)
+    draw.text((200, 40), clean_title_text, fill=(255, 255, 255), font=font_title)
+    draw.text((width - 240, 40), data["players"], fill=(200, 200, 200), font=font_title)
     
 
     for i in range(4):
-        bar_h = (i + 1) * 4
-        draw.rectangle([width - 40 + (i * 6), 38 - bar_h, width - 37 + (i * 6), 38], fill=GRAPH_COLOR)
+        bar_h = (i + 1) * 8
+        draw.rectangle([width - 80 + (i * 12), 76 - bar_h, width - 74 + (i * 12), 76], fill=GRAPH_COLOR)
 
     if len(data["motd"]) > 1:
-        draw_minecraft_text(draw, (100, 48), data["motd"][1], font=font_motd)
+        draw_minecraft_text(draw, (200, 96), data["motd"][1], font=font_motd)
 
-    draw.line([(20, 100), (width - 20, 100)], fill=(45, 45, 45), width=1)
+    draw.line([(40, 200), (width - 40, 200)], fill=(45, 45, 45), width=2)
 
 
-    draw.text((20, 115), f"Player activity — {clean_title_text}", fill=(255, 255, 255), font=font_title)
-    draw.text((20, 140), "last 7 days", fill=(120, 120, 120), font=font_small)
+    draw.text((40, 240), f"Player activity — {clean_title_text}", fill=(255, 255, 255), font=font_title)
+    draw.text((40, 290), "last 24 hours", fill=(120, 120, 120), font=font_small)
 
-    graph_x1, graph_y1 = 60, 160
-    graph_x2, graph_y2 = width - 30, 310
+    graph_x1, graph_y1 = 120, 360
+    graph_x2, graph_y2 = width - 60, 980
     
     max_players_recorded = max([h["players"] for h in history]) if history else 5
     y_max = max(6, max_players_recorded + 2)
@@ -167,9 +172,8 @@ def generate_card():
         y_pos = graph_y2 - int(y_val * ((graph_y2 - graph_y1) / y_max))
         if y_pos >= graph_y1:
             draw.line([(graph_x1, y_pos), (graph_x2, y_pos)], fill=(35, 35, 35), width=1)
-            draw.text((35, y_pos - 6), str(y_val), fill=(150, 150, 150), font=font_small)
+            draw.text((70, y_pos - 12), str(y_val), fill=(150, 150, 150), font=font_small)
 
-  
     if len(history) > 1:
         step = (graph_x2 - graph_x1) / (len(history) - 1)
         points = []
@@ -178,10 +182,10 @@ def generate_card():
             p_count = entry["players"]
             y_pos = graph_y2 - int(p_count * ((graph_y2 - graph_y1) / y_max))
             points.append((x_pos, y_pos))
-            draw.ellipse([x_pos - 2, y_pos - 2, x_pos + 2, y_pos + 2], fill=GRAPH_COLOR)
+            draw.ellipse([x_pos - 4, y_pos - 4, x_pos + 4, y_pos + 4], fill=GRAPH_COLOR)
 
         for i in range(len(points) - 1):
-            draw.line([points[i], points[i+1]], fill=GRAPH_COLOR, width=2)
+            draw.line([points[i], points[i+1]], fill=GRAPH_COLOR, width=4)
 
 
     try:
