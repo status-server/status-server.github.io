@@ -180,12 +180,12 @@ def generate_card():
         for i in range(len(points) - 1):
             draw.line([points[i], points[i+1]], fill=GRAPH_COLOR, width=2)
 
-   try:
-        os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-        img.save(OUTPUT_PATH)
-        print("Status card generated successfully at:", OUTPUT_PATH)
-    except Exception as e:
-        print(f"CRITICAL ERROR SAVING IMAGE: {e}")
+try:
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    img.save(OUTPUT_PATH)
+    print("Status card generated successfully at:", OUTPUT_PATH)
+except Exception as e:
+    print(f"CRITICAL ERROR SAVING IMAGE: {e}")
 
 if __name__ == "__main__":
     generate_card()
