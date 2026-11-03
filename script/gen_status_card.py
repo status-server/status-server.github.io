@@ -115,12 +115,17 @@ def generate_card():
     img = Image.new("RGB", (width, height), color=BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-    try:
-        font_title = ImageFont.truetype("arial.ttf", 40)
-        font_motd = ImageFont.truetype("arial.ttf", 32)
-        font_small = ImageFont.truetype("arial.ttf", 24)
+try:
+        font_title = ImageFont.truetype("arial.ttf", 52)
+        font_motd = ImageFont.truetype("arial.ttf", 38)
+        font_small = ImageFont.truetype("arial.ttf", 26)
     except IOError:
-        font_title = font_motd = font_small = ImageFont.load_default()
+        try:
+            font_title = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 52)
+            font_motd = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 38)
+            font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 26)
+        except IOError:
+            font_title = font_motd = font_small = ImageFont.load_default()
 
 
     draw.rectangle([40, 40, 168, 168], outline=(60, 60, 60), fill=(30, 30, 30))
