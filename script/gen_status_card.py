@@ -114,7 +114,6 @@ def generate_card():
     except IOError:
         font_title = font_motd = font_small = ImageFont.load_default()
 
-
     draw.rectangle([20, 20, 84, 84], outline=(60, 60, 60), fill=(30, 30, 30))
 
     if data["icon"]:
